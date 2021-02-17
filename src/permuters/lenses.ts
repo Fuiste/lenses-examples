@@ -7,5 +7,4 @@ export const setUser = (user: UserInfo): StatePermuter => Lenses.user.set(user);
 export const setUserNameAndEmail = (
   name: UserInfo["name"],
   email: UserInfo["email"]
-): StatePermuter =>
-  flow(Lenses.userName.set(name), Lenses.userEmail.set(email));
+): StatePermuter => flow(Lenses.name.set(name), Lenses.email.set(email));

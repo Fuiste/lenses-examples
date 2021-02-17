@@ -1,11 +1,7 @@
-import { isEqual } from "lodash";
-import * as Spread from "./permuters/spread";
-import * as Lenses from "./permuters/lenses";
-
 export type SessionInfo = {
   token: string;
   metadata: {
-    loggedInOn: Date;
+    refreshedOn: Date;
     isAdmin: boolean;
   };
 };
@@ -23,7 +19,7 @@ export type State = {
 
 export type StatePermuter = (state: State) => State;
 
-const initialState = (): State => {
+export const initialState = (): State => {
   return {
     user: {
       name: "Rudy Pelrine",
@@ -34,31 +30,8 @@ const initialState = (): State => {
       token: "asdf1234",
       metadata: {
         isAdmin: false,
-        loggedInOn: new Date(),
+        refreshedOn: new Date(),
       },
     },
   };
 };
-
-const comparePermutations = (
-  fna: StatePermuter,
-  fnb: StatePermuter,
-  state = initialState()
-) => {
-  const newA = fna(state);
-  const newB = fnb(state);
-
-  console.log(`States are equal? ${isEqual(newA, newB)}`);
-};
-
-const newUser: UserInfo = {
-  name: "Will Pelrine",
-  email: "will@test.com",
-  widgets: 500,
-};
-
-comparePermutations(Spread.setUser(newUser), Lenses.setUser(newUser));
-comparePermutations(
-  Spread.setUserNameAndEmail(newUser.name, newUser.email),
-  Lenses.setUserNameAndEmail(newUser.name, newUser.email)
-);
