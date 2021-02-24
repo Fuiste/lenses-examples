@@ -74,7 +74,7 @@ case CartActionTypes.CART_ADD_PRODUCT_SUCCESS:
 ```javascript
 case CartActionTypes.CART_ADD_PRODUCT_SUCCESS:
   const { quantity, sku } = action.payload;
-  const currentQuantity = get(state, `products[${sku}].quantity`);
+  const currentQuantity = Lenses.cartProducts(sku)(state).quantity;
   const updatedQuantity = isNumber(currentQuantity)
     ? currentQuantity + quantity
     : quantity;
