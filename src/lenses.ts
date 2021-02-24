@@ -1,8 +1,9 @@
 import { Lens, Prism } from "@atomic-object/lenses";
 import produce from "immer";
-import { State, UserInfo } from ".";
+import { ActivityInfo, State, UserInfo } from ".";
 
 // Base lenses
+export const activities = Lens.from<State>().prop("activities");
 export const session = Lens.from<State>().prop("session");
 export const user = Lens.from<State>().prop("user");
 
@@ -31,3 +32,17 @@ export const refreshedOn = Prism.of<State, Date | undefined>({
     }
   },
 });
+
+// Activity lenses
+export const activity = (id: ActivityInfo["id"]) => {
+  return Prism.comp(
+    activities,
+    Prism.of<State["activities"], ActivityInfo | undefined>({
+      get: (activityMap) => activityMap[id],
+      set: (activityMap, activity) =>
+        produce(activityMap, (newActivityMap) => {
+          newActivityMap[id] = activity;
+        }),
+    })
+  );
+};

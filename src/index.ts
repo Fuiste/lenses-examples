@@ -1,3 +1,9 @@
+export type ActivityInfo = {
+  id: string;
+  timestamp: Date;
+  title: string;
+};
+
 export type SessionInfo = {
   token: string;
   metadata: {
@@ -15,6 +21,9 @@ export type UserInfo = {
 export type State = {
   user: UserInfo;
   session: SessionInfo | undefined;
+  activities: {
+    [id: string]: ActivityInfo;
+  };
 };
 
 export type StatePermuter = (state: State) => State;
@@ -31,6 +40,23 @@ export const initialState = (): State => {
       metadata: {
         isAdmin: false,
         refreshedOn: new Date(),
+      },
+    },
+    activities: {
+      one: {
+        id: "one",
+        timestamp: new Date(),
+        title: "First Activity",
+      },
+      two: {
+        id: "two",
+        timestamp: new Date(),
+        title: "Second Activity",
+      },
+      three: {
+        id: "three",
+        timestamp: new Date(),
+        title: "Third Activity",
       },
     },
   };
