@@ -6,9 +6,9 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "build:watch": "npm run clean && tsc --watch",
+    "build:noemit": "tsc --watch --noemit",
     "clean": "rimraf dist",
     "start": "npm run build && node dist/index.js",
-    "watch": "tsc --watch --noemit",
     "test": "jest"
   },
   "author": "Rudy Pelrine",
