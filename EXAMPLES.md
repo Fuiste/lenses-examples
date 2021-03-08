@@ -17,7 +17,7 @@ case UIActionTypes.UI_HIDE_BANNER:
 
 **Lenses**
 
-```typescript
+```javascript
 case UIActionTypes.UI_HIDE_BANNER:
   return Lenses.bannerComponent.set(null)(state);
 ```
@@ -36,7 +36,7 @@ case UserActionTypes.USER_ADDRESS_CREATE_SUCCESS:
 
 **Lenses**
 
-```typescript
+```javascript
 case UserActionTypes.USER_ADDRESS_CREATE_SUCCESS:
   const extantAddresses = Lenses.userAddresses(state);
 
@@ -71,10 +71,10 @@ case CartActionTypes.CART_ADD_PRODUCT_SUCCESS:
 
 **Lenses**
 
-```typescript
+```javascript
 case CartActionTypes.CART_ADD_PRODUCT_SUCCESS:
   const { quantity, sku } = action.payload;
-  const currentQuantity = get(state, `products[${sku}].quantity`);
+  const currentQuantity = Lenses.cartProducts(sku)(state).quantity;
   const updatedQuantity = isNumber(currentQuantity)
     ? currentQuantity + quantity
     : quantity;
